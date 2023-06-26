@@ -7,29 +7,18 @@ const App = () => {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const { image, name, job, text } = reviews[currentReviewIndex];
 
-  const checkNumber = (number) => {
-    if (number > reviews.length - 1) {
-      return 0;
-    }
-
-    if (number < 0) {
-      return reviews.length - 1;
-    }
-
-    return number;
-  };
-
   const nextReview = () => {
     setCurrentReviewIndex((currentIndex) => {
-      const newReviewIndex = currentIndex + 1;
-      return checkNumber(newReviewIndex);
+      const newReviewIndex = (currentIndex + 1) % reviews.length;
+      return newReviewIndex;
     });
   };
 
   const prevReview = () => {
     setCurrentReviewIndex((currentIndex) => {
-      const newReviewIndex = currentIndex - 1;
-      return checkNumber(newReviewIndex);
+      const newReviewIndex =
+        (currentIndex - 1 + reviews.length) % reviews.length;
+      return newReviewIndex;
     });
   };
 
@@ -40,7 +29,9 @@ const App = () => {
       randomNumber = currentReviewIndex + 1;
     }
 
-    setCurrentReviewIndex(checkNumber(randomNumber));
+    const newReviewIndex = randomNumber % reviews.length;
+
+    setCurrentReviewIndex(newReviewIndex);
   };
 
   return (
